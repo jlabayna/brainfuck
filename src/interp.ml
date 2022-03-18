@@ -30,7 +30,7 @@ let parse s =
   let ast = Parser.prog Lexer.read lexbuf in
   ast
 
-(** Interpret an input brainfuck string *)
+(** Interpret an input brainfuck string, resetting the tape when done. *)
 let interp (e:string) : unit =
   e |> parse |> eval_prog;
   for i = 0 to (size - 1) do

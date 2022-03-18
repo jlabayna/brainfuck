@@ -6,3 +6,6 @@
 - [] Do some minor optimization
 - [] Add compilation errors
 - [] Pad Resume
+
+## TODO
+- [] Fix funkyness with using scanf
