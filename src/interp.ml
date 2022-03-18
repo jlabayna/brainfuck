@@ -1,10 +1,11 @@
-(*type env = int array
-type reader = (env, int) -> ()*)
 open Ast
 
-let tape = Array.make 30000 0
+(* Declare brainfuck array/tape and pointer*)
+let size = 30000
+let tape = Array.make size 0
 let ptr = ref 0
 
+(** Take a list of expressions an evaluate them *)
 let rec eval_prog : expr list -> unit = fun elist ->
   match elist with
   | Inc::tl -> tape.(!ptr) <- tape.(!ptr) + 1; eval_prog tl
@@ -23,11 +24,15 @@ let rec eval_prog : expr list -> unit = fun elist ->
         eval_prog tl
   | [] -> ()
 
+(** Parse a string s into an ast as defined in ast.ml *)
 let parse s =
   let lexbuf = Lexing.from_string s in
   let ast = Parser.prog Lexer.read lexbuf in
   ast
 
+(** Interpret an input brainfuck string *)
 let interp (e:string) : unit =
-  e |> parse |> eval_prog
-
+  e |> parse |> eval_prog;
+  for i = 0 to (size - 1) do
+    tape.(i) <- 0
+  done
